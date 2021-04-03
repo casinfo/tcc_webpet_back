@@ -1,13 +1,11 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 import Usuario from "../models/Usuario";
 
 class UsuarioController {
-
   async index(req, res) {
-
     const UsuarioAutorizado = await Usuario.findOne({
-      where: { id: req.id_usuario, tipo_usuario: "A"}
+      where: { id: req.id_usuario, tipo_usuario: "A" },
     });
 
     //if (!UsuarioAutorizado) {
@@ -15,8 +13,8 @@ class UsuarioController {
     //}
 
     const { id } = req.query;
-    const query = id ? { where: { id } } : {};   
-    const usuario = await Usuario.findAll(query);   
+    const query = id ? { where: { id } } : {};
+    const usuario = await Usuario.findAll(query);
 
     return res.json(usuario);
   }
@@ -30,7 +28,11 @@ class UsuarioController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validação falhou, tente novamente ou contate o suporte!' });
+      return res
+        .status(400)
+        .json({
+          error: "Validação falhou, tente novamente ou contate o suporte!",
+        });
     }
 
     const usuarioExiste = await Usuario.findOne({
@@ -47,23 +49,26 @@ class UsuarioController {
   }
 
   async update(req, res) {
-
     const schema = Yup.object().shape({
       nome: Yup.string(),
       email: Yup.string().email(),
       senhaAtual: Yup.string().min(8),
-      senhaNova: Yup.string().min(8)
-        .when('senhaAtual', (senhaAtual, field) =>
+      senhaNova: Yup.string()
+        .min(8)
+        .when("senhaAtual", (senhaAtual, field) =>
           senhaAtual ? field.required() : field
         ),
-      confirmaSenha: Yup.string()
-        .when('senhaNova', (senhaNova, field) =>
-          senhaNova ? field.required().oneOf([Yup.ref('senhaNova')]) : field
+      confirmaSenha: Yup.string().when("senhaNova", (senhaNova, field) =>
+        senhaNova ? field.required().oneOf([Yup.ref("senhaNova")]) : field
       ),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validação falhou, tente novamente ou contate o suporte!' });
+      return res
+        .status(400)
+        .json({
+          error: "Validação falhou, tente novamente ou contate o suporte!",
+        });
     }
     const { id } = req.params;
 
@@ -81,12 +86,12 @@ class UsuarioController {
       });
 
       if (usuarioExiste) {
-        return res.status(400).json({ error: 'Usuário já existe.' });
+        return res.status(400).json({ error: "Usuário já existe." });
       }
     }
-  
+
     if (senhaAtual && !(await usuario.checkPassword(senhaAtual))) {
-      return res.status(401).json({ error: 'Senha inválida.' });
+      return res.status(401).json({ error: "Senha inválida." });
     }
     const { nome, tipo_usuario } = await usuario.update(req.body);
 
@@ -99,23 +104,24 @@ class UsuarioController {
   }
 
   async delete(req, res) {
-
     const UsuarioAutorizado = await Usuario.findOne({
-      where: { id: req.id_usuario, tipo_usuario: "A"}
+      where: { id: req.id_usuario, tipo_usuario: "A" },
     });
 
     if (!UsuarioAutorizado) {
-      return res.status(401).json({ error: 'Usuário não tem perfil de administrador.' });
+      return res
+        .status(401)
+        .json({ error: "Usuário não tem perfil de administrador." });
     }
     const { id } = req.params;
 
-    const usuario = await Usuario.destroy({ where: {id} });
+    const usuario = await Usuario.destroy({ where: { id } });
 
-    if(usuario <= 0) {
-      return res.status(400).json('Usuário não existe.');
+    if (usuario <= 0) {
+      return res.status(400).json("Usuário não existe.");
     }
 
-    return res.json('Usuário deletado com sucesso.');
+    return res.json("Usuário deletado com sucesso.");
   }
 }
 
