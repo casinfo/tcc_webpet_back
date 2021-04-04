@@ -17,6 +17,11 @@ module.exports = {
   username: "sqvawzxtkshqap",
   password: "4156bc4092d3337f11025cc03f3d989d9c3f42fbf71f8187b98d05edda539696",
   database: "d26kct279rfopl",
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: false, // This line will fix new error
+    },
+  },
   define: {
     timestamps: true,
     underscored: true,
