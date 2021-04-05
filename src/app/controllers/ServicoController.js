@@ -15,23 +15,26 @@ class ServicoController {
   }
 
   async store(req, res) {
-
     const UsuarioAutorizado = await Usuario.findOne({
-      where: { id: req.id_usuario, tipo_usuario: "A"}
+      where: { id: req.id_usuario, tipo_usuario: "A" },
     });
 
     if (!UsuarioAutorizado) {
-      return res.status(401).json({ error: 'Usuário não tem perfil de administrador.' });
+      res.json({
+        status: 401,
+        error: "Usuário não tem perfil de administrador!",
+      });
     }
 
     const schema = Yup.object().shape({
       descricao: Yup.string().required(),
-      tempo_medio: Yup.string().required()
+      tempo_medio: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
-        error: "Validação falhou, tente novamente ou contate o suporte!",
+      res.json({
+        status: 401,
+        error: "Os dados não foram preenchidos corretamente!",
       });
     }
 
@@ -42,37 +45,44 @@ class ServicoController {
 
   async update(req, res) {
     const UsuarioAutorizado = await Usuario.findOne({
-      where: { id: req.id_usuario, tipo_usuario: "A"}
+      where: { id: req.id_usuario, tipo_usuario: "A" },
     });
 
     if (!UsuarioAutorizado) {
-      return res.status(401).json({ error: 'Usuário não tem perfil de administrador.' });
+      res.json({
+        status: 401,
+        error: "Usuário não tem perfil de administrador!",
+      });
     }
 
     const schema = Yup.object().shape({
       descricao: Yup.string().required(),
-      tempo_medio: Yup.string().required()
+      tempo_medio: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
-        error: "Validação falhou, tente novamente ou contate o suporte!",
+      res.json({
+        status: 401,
+        error: "Os dados não foram preenchidos corretamente!",
       });
     }
 
     const { id } = req.params;
 
     const servico = await Servico.findOne({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (servico === null) {
-      return res.status(400).json("Serviço não existe.");
+      res.json({
+        status: 400,
+        error: "Serviço não existe!",
+      });
     }
 
     const { descricao, tempo_medio } = req.body;
 
-    const servicoAtualizado = await servico.update({ descricao, tempo_medio});
+    const servicoAtualizado = await servico.update({ descricao, tempo_medio });
 
     return res.json(servicoAtualizado);
   }
