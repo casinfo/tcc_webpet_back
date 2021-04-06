@@ -15,8 +15,15 @@ class PetController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      //id_cliente: Yup.integer(),
+      id_cliente: Yup.integer(),
       nome: Yup.string().required(),
+      especie: Yup.string().required(),
+      raca: Yup.string().required(),
+      data_nascto: data_nascto,
+      peso: Yup.integer(),
+      vacinado: Yup.string().required(),
+      porte: Yup.string().required(),
+      sexo: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -33,8 +40,14 @@ class PetController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      nome: Yup.string(),
-      // email: Yup.string().email(),
+      nome: Yup.string().required(),
+      especie: Yup.string().required(),
+      raca: Yup.string().required(),
+      data_nascto: data_nascto,
+      peso: Yup.integer(),
+      vacinado: Yup.string().required(),
+      porte: Yup.string().required(),
+      sexo: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {

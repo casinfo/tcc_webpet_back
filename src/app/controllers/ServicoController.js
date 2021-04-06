@@ -104,7 +104,7 @@ class ServicoController {
 
     if (servico <= 0) {
       res.json({
-        status: 401,
+        status: 400,
         error: "Serviço não encontrado!",
       });
     }
