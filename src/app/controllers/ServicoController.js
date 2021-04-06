@@ -93,19 +93,21 @@ class ServicoController {
     });
 
     if (!UsuarioAutorizado) {
-      return res
-        .status(401)
-        .json({ error: "Usuário não tem perfil de administrador." });
+      res.json({
+        status: 401,
+        error: "Usuário não tem perfil de Administrador!",
+      });
     }
     const { id } = req.params;
 
     const servico = await Servico.destroy({ where: { id } });
 
     if (servico <= 0) {
-      return res.status(400).json("Serviço não existe.");
+      res.json({
+        status: 401,
+        error: "Serviço não encontrado!",
+      });
     }
-
-    return res.json("Serviço deletado com sucesso.");
   }
 }
 
