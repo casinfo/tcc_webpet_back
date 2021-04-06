@@ -14,8 +14,9 @@ class PetController {
   }
 
   async store(req, res) {
+    /*
     const schema = Yup.object().shape({
-      id_cliente: Yup.integer(),
+      //id_cliente: Yup.integer(),
       nome: Yup.string().required(),
       especie: Yup.string().required(),
       raca: Yup.string().required(),
@@ -32,6 +33,7 @@ class PetController {
         error: "Os dados não foram preenchidos corretamente!",
       });
     }
+    */
 
     const pet = await Pet.create(req.body);
 
