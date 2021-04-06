@@ -20,8 +20,9 @@ class PetController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
-        error: "Validação falhou, tente novamente ou contate o suporte!",
+      res.json({
+        status: 401,
+        error: "Os dados não foram preenchidos corretamente!",
       });
     }
 
@@ -33,12 +34,13 @@ class PetController {
   async update(req, res) {
     const schema = Yup.object().shape({
       nome: Yup.string(),
-      email: Yup.string().email(),
+      // email: Yup.string().email(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
-        error: "Validação falhou, tente novamente ou contate o suporte!",
+      res.json({
+        status: 401,
+        error: "Os dados não foram preenchidos corretamente!!",
       });
     }
 
@@ -52,15 +54,27 @@ class PetController {
   }
 
   async delete(req, res) {
+    const UsuarioAutorizado = await Usuario.findOne({
+      where: { id: req.id_usuario, tipo_usuario: "A" },
+    });
+
+    if (!UsuarioAutorizado) {
+      res.json({
+        status: 401,
+        error: "Usuário não tem perfil de Administrador!",
+      });
+    }
+
     const { id } = req.params;
 
     const usuario = await Pet.destroy({ where: { id } });
 
     if (usuario <= 0) {
-      return res.status(400).json("Pet não existe.");
+      res.json({
+        status: 400,
+        error: "Pet não cadastrado!",
+      });
     }
-
-    return res.json("Pet deletado com sucesso.");
   }
 }
 
