@@ -19,7 +19,7 @@ class PetController {
       nome: Yup.string().required(),
       especie: Yup.string().required(),
       raca: Yup.string().required(),
-      data_nascto: data_nascto,
+      data_nascto: Yup.string().required(),
       peso: Yup.integer(),
       vacinado: Yup.string().required(),
       porte: Yup.string().required(),

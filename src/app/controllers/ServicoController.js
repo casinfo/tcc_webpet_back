@@ -15,6 +15,7 @@ class ServicoController {
   }
 
   async store(req, res) {
+    /*
     const UsuarioAutorizado = await Usuario.findOne({
       where: { id: req.id_usuario, tipo_usuario: "A" },
     });
@@ -25,6 +26,7 @@ class ServicoController {
         error: "Usuário não tem perfil de administrador!",
       });
     }
+    */
 
     const schema = Yup.object().shape({
       descricao: Yup.string().required(),
@@ -44,6 +46,7 @@ class ServicoController {
   }
 
   async update(req, res) {
+    /*
     const UsuarioAutorizado = await Usuario.findOne({
       where: { id: req.id_usuario, tipo_usuario: "A" },
     });
@@ -54,6 +57,7 @@ class ServicoController {
         error: "Usuário não tem perfil de administrador!",
       });
     }
+    */
 
     const schema = Yup.object().shape({
       descricao: Yup.string().required(),
