@@ -83,7 +83,7 @@ class PetController {
     console.log(tip_usuario);
 
     if (tip_usuario !== "A") {
-      res.json({
+      return res.json({
         status: 401,
         error: "Usuário não tem perfil de Administrador!",
       });
