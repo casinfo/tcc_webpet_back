@@ -49,7 +49,7 @@ routes.delete("/pets/:id", PetController.delete);
 routes.get("/agenda", AgendaController.index);
 routes.post("/agenda", AgendaController.store);
 routes.put("/agenda/:id", AgendaController.update);
-routes.put("/agenda/:id", AgendaController.updateConfirma);
+routes.put("/agendaConfirma/:id", AgendaController.update);
 routes.delete("/agenda/:id", AgendaController.delete);
 
 module.exports = routes;

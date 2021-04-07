@@ -64,7 +64,7 @@ class AgendaController {
     return res.json("Agendamento deletado com sucesso.");
   }
 
-  async updateConfirma(req, res) {
+  async agendaConfirma(req, res) {
     const schema = Yup.object().shape({
       confirmado: Yup.string().required(),
     });
