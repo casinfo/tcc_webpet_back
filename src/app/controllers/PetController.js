@@ -70,8 +70,9 @@ class PetController {
   }
 
   async delete(req, res) {
-    /*
     const { id_usuario } = getIdUsuario();
+
+    console.log(id_usuario);
 
     const UsuarioAutorizado = await Usuario.findOne({
       where: { id: id_usuario, tipo_usuario: "A" },
@@ -83,7 +84,6 @@ class PetController {
         error: "Usuário não tem perfil de Administrador!",
       });
     }
-    */
 
     const { id } = req.params;
 
