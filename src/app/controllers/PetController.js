@@ -1,8 +1,6 @@
 import * as Yup from "yup";
 
-import { getTipoUsuario } from "../../config/auth";
 import Pet from "../models/Pets";
-
 class PetController {
   async index(req, res) {
     const { id } = req.query;
@@ -70,29 +68,26 @@ class PetController {
   }
 
   async delete(req, res) {
-    let tp_usuario = getTipoUsuario();
+    const UsuarioAutorizado = await Usuario.findOne({
+      where: { id: req.id_usuario, tipo_usuario: "A" },
+    });
 
-    console.log(tp_usuario);
-
-    if (tp_usuario !== "A") {
-      return res.json({
+    if (!UsuarioAutorizado) {
+      res.json({
         status: 401,
         error: "Usuário não tem perfil de Administrador!",
       });
     }
-
     const { id } = req.params;
 
     const pet = await Pet.destroy({ where: { id } });
 
     if (pet <= 0) {
-      return res.json({
+      res.json({
         status: 400,
         error: "Pet não cadastrado!",
       });
     }
-
-    return res.json("Pet deletado com sucesso.");
   }
 }
 
