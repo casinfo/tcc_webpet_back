@@ -70,7 +70,7 @@ class AgendaController {
     });
     const agenda = await Agenda.findByPk(id);
 
-    const agendaAtualizada = await agenda.putConfirma(req.body);
+    const agendaAtualizada = await agenda.put(req.body);
 
     return res.json(agendaAtualizada);
   }
