@@ -70,7 +70,7 @@ class PetController {
   }
 
   async delete(req, res) {
-    const { id_usuario } = getIdUsuario();
+    const { id_usuario } = authConfig.getIdUsuario();
 
     console.log(id_usuario);
 
