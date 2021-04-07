@@ -4,3 +4,4 @@ export default {
 };
 
 export const getIdUsuario = () => localStorage.getItem(ID_USUARIO);
+export const getTipoUsuario = () => localStorage.getItem(TIPO_USUARIO);
