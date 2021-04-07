@@ -64,13 +64,13 @@ class AgendaController {
     return res.json("Agendamento deletado com sucesso.");
   }
 
-  async storeConfirma(req, res) {
+  async updateConfirma(req, res) {
     const schema = Yup.object().shape({
       confirmado: Yup.string().required(),
     });
     const agenda = await Agenda.findByPk(id);
 
-    const agendaAtualizada = await agenda.put(req.body);
+    const agendaAtualizada = await agenda.updateConfirma(req.body);
 
     return res.json(agendaAtualizada);
   }
