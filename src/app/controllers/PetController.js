@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import Pet from "../models/Pets";
 import Usuario from "../models/Usuario";
-//import { getTipoUsuario } from "../../config/auth";
+import { getTipoUsuario } from "../../config/auth";
 
 class PetController {
   async index(req, res) {
@@ -77,6 +77,10 @@ class PetController {
 
     console.log(UsuarioAutorizado);
     console.log(req.id_usuario);
+
+    let tip_usuario = getTipoUsuario();
+
+    console.log(tip_usuario);
 
     if (!UsuarioAutorizado) {
       res.json({
