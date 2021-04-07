@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 
+import authConfig from "../../config/auth";
 import Pet from "../models/Pets";
 
 class PetController {
@@ -69,8 +70,10 @@ class PetController {
   }
 
   async delete(req, res) {
+    const { id_usuario } = getIdUsuario();
+
     const UsuarioAutorizado = await Usuario.findOne({
-      where: { id: req.id_usuario, tipo_usuario: "A" },
+      where: { id: id_usuario, tipo_usuario: "A" },
     });
 
     if (!UsuarioAutorizado) {
@@ -82,14 +85,16 @@ class PetController {
 
     const { id } = req.params;
 
-    const usuario = await Pet.destroy({ where: { id } });
+    const pet = await Pet.destroy({ where: { id } });
 
-    if (usuario <= 0) {
+    if (pet <= 0) {
       res.json({
         status: 400,
         error: "Pet não cadastrado!",
       });
     }
+
+    return res.json("Pet deletado com sucesso.");
   }
 }
 
