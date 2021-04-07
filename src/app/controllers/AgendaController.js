@@ -4,7 +4,6 @@ import Agenda from "../models/Agenda";
 
 class AgendaController {
   async index(req, res) {
-
     const { id } = req.query;
 
     const query = id ? { where: { id } } : {};
@@ -15,20 +14,17 @@ class AgendaController {
   }
 
   async store(req, res) {
-
     const schema = Yup.object().shape({
       id_usuario: Yup.number().required(),
       id_cliente: Yup.number().required(),
       id_servico: Yup.number().required(),
-      id_pet: Yup.number().required()
+      id_pet: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res
-        .status(400)
-        .json({
-          error: "Validação falhou, tente novamente ou contate o suporte!",
-        });
+      return res.status(400).json({
+        error: "Validação falhou, tente novamente ou contate o suporte!",
+      });
     }
 
     const agenda = await Agenda.create(req.body);
@@ -42,11 +38,9 @@ class AgendaController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res
-        .status(400)
-        .json({
-          error: "Validação falhou, tente novamente ou contate o suporte!",
-        });
+      return res.status(400).json({
+        error: "Validação falhou, tente novamente ou contate o suporte!",
+      });
     }
 
     const { id } = req.params;
@@ -70,6 +64,16 @@ class AgendaController {
     return res.json("Agendamento deletado com sucesso.");
   }
 
+  async storeConfirma(req, res) {
+    const schema = Yup.object().shape({
+      confirmado: Yup.string().required(),
+    });
+    const agenda = await Agenda.findByPk(id);
+
+    const agendaAtualizada = await agenda.update(req.body);
+
+    return res.json(agendaAtualizada);
+  }
 }
 
 export default new AgendaController();
