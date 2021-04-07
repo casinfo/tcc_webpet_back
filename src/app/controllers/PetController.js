@@ -75,7 +75,7 @@ class PetController {
     console.log(tp_usuario);
 
     if (tp_usuario !== "A") {
-      res.json({
+      return res.json({
         status: 401,
         error: "Usuário não tem perfil de Administrador!",
       });
@@ -86,7 +86,7 @@ class PetController {
     const pet = await Pet.destroy({ where: { id } });
 
     if (pet <= 0) {
-      res.json({
+      return res.json({
         status: 400,
         error: "Pet não cadastrado!",
       });
