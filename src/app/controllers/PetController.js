@@ -2,7 +2,6 @@ import * as Yup from "yup";
 
 import Pet from "../models/Pets";
 import Usuario from "../models/Usuario";
-import { getTipoUsuario } from "../../config/auth";
 
 class PetController {
   async index(req, res) {
@@ -16,13 +15,12 @@ class PetController {
   }
 
   async store(req, res) {
-    /*
     const schema = Yup.object().shape({
-      //id_cliente: Yup.integer(),
+      id_cliente: Yup.integer(),
       nome: Yup.string().required(),
       especie: Yup.string().required(),
       raca: Yup.string().required(),
-      data_nascto: Yup.string().required(),
+      data_nascto: Yup.date().required(),
       peso: Yup.integer(),
       vacinado: Yup.string().required(),
       porte: Yup.string().required(),
@@ -35,7 +33,6 @@ class PetController {
         error: "Os dados não foram preenchidos corretamente!",
       });
     }
-    */
 
     const pet = await Pet.create(req.body);
 
@@ -76,14 +73,6 @@ class PetController {
     });
 
     if (!UsuarioAutorizado) {
-      res.json({
-        status: 401,
-        error: "Usuário não tem perfil de Administrador!",
-      });
-    }
-
-    let tip_usuario = getTipoUsuario();
-    if (tip_usuario !== "A") {
       res.json({
         status: 401,
         error: "Usuário não tem perfil de Administrador!",
