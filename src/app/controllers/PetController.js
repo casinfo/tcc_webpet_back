@@ -71,12 +71,12 @@ class PetController {
   }
 
   async delete(req, res) {
-    const UsuarioAutorizado = await Usuario.findOne({
-      where: { id: req.id_usuario, tipo_usuario: "A" },
-    });
+    //const UsuarioAutorizado = await Usuario.findOne({
+    //  where: { id: req.id_usuario, tipo_usuario: "A" },
+    //});
 
-    console.log(UsuarioAutorizado);
-    console.log(req.id_usuario);
+    //console.log(UsuarioAutorizado);
+    //console.log(req.id_usuario);
 
     let tip_usuario = getTipoUsuario();
 
