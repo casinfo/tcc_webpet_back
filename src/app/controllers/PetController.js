@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
 import Pet from "../models/Pets";
+import Usuario from "../models/Usuario";
 class PetController {
   async index(req, res) {
     const { id } = req.query;
