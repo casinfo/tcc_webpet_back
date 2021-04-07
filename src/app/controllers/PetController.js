@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import Pet from "../models/Pets";
 import Usuario from "../models/Usuario";
-import authConfig, { getTipoUsuario } from "../../config/auth";
+//import { getTipoUsuario } from "../../config/auth";
 
 class PetController {
   async index(req, res) {
@@ -71,13 +71,14 @@ class PetController {
   }
 
   async delete(req, res) {
-    //const UsuarioAutorizado = await Usuario.findOne({
-    //  where: { id: req.id_usuario, tipo_usuario: "A" },
-    //});
+    const UsuarioAutorizado = await Usuario.findOne({
+      where: { id: req.id_usuario, tipo_usuario: "A" },
+    });
 
-    let UsuarioAutorizado = getTipoUsuario();
+    console.log(UsuarioAutorizado);
+    console.log(req.id_usuario);
 
-    if (UsuarioAutorizado !== "A") {
+    if (!UsuarioAutorizado) {
       res.json({
         status: 401,
         error: "Usuário não tem perfil de Administrador!",
