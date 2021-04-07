@@ -71,23 +71,20 @@ class PetController {
   }
 
   async delete(req, res) {
-    //const UsuarioAutorizado = await Usuario.findOne({
-    //  where: { id: req.id_usuario, tipo_usuario: "A" },
-    //});
+    const UsuarioAutorizado = await Usuario.findOne({
+      where: { id: req.id_usuario, tipo_usuario: "A" },
+    });
 
-    //console.log(UsuarioAutorizado);
-    //console.log(req.id_usuario);
-
-    let tip_usuario = getTipoUsuario();
-
-    console.log(tip_usuario);
-
-    if (tip_usuario !== "A") {
-      return res.json({
+    if (!UsuarioAutorizado) {
+      res.json({
         status: 401,
         error: "Usuário não tem perfil de Administrador!",
       });
     }
+
+    let tip_usuario = getTipoUsuario();
+    console.log(tip_usuario);
+
     const { id } = req.params;
 
     const pet = await Pet.destroy({ where: { id } });
