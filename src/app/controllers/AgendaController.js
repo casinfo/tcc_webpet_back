@@ -34,12 +34,13 @@ class AgendaController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      id_usuario: Yup.number().required(),
+      confirmado: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
-        error: "Validação falhou, tente novamente ou contate o suporte!",
+      return res.json({
+        status: 400,
+        error: "Parâmetros não enviados!",
       });
     }
 
@@ -64,16 +65,18 @@ class AgendaController {
     return res.json("Agendamento deletado com sucesso.");
   }
 
-  async agendaConfirma(req, res) {
+  /*
+  async updateConfirma(req, res) {
     const schema = Yup.object().shape({
       confirmado: Yup.string().required(),
     });
     const agenda = await Agenda.findByPk(id);
 
-    const agendaAtualizada = await agenda.agendaConfirma(req.body);
+    const agendaAtualizada = await agenda.put(req.body);
 
     return res.json(agendaAtualizada);
   }
+  */
 }
 
 export default new AgendaController();
