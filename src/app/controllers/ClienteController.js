@@ -22,10 +22,10 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-        return res.json({
-          status: 400,
-          error: "Nome, e-mail e cpf, devem ser preenchidos!",
-        });
+      return res.json({
+        status: 400,
+        error: "Nome, e-mail e cpf devem ser preenchidos!",
+      });
     }
 
     const clienteExiste = await Cliente.findOne({
@@ -33,11 +33,10 @@ class ClienteController {
     });
 
     if (clienteExiste) {
-        return res.json({
-          status: 400,
-          error: "Cliente já existe com este e-mail!",
-        });
-      }
+      return res.json({
+        status: 400,
+        error: "Cliente já existe com este e-mail!",
+      });
     }
 
     const cliente = await Cliente.create(req.body);
@@ -52,11 +51,11 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-        return res.json({
-          status: 400,
-          error: "Nome, e-mail e cpf, devem ser preenchidos!",
-        });
-      }
+      return res.json({
+        status: 400,
+        error: "Nome, e-mail e cpf, devem ser preenchidos!",
+      });
+    }
 
     const { id } = req.params;
     const { email } = req.body;
