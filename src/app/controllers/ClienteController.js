@@ -70,7 +70,7 @@ class ClienteController {
       if (clienteExiste) {
         return res.json({
           status: 400,
-          error: "Clliente não cadastrado!",
+          error: "Clliente já cadastrado!",
         });
       }
     }
