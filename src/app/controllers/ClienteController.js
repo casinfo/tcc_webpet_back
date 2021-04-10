@@ -5,7 +5,6 @@ import Usuario from "../models/Usuario";
 
 class ClienteController {
   async index(req, res) {
-
     const { id } = req.query;
 
     const query = id ? { where: { id } } : {};
@@ -16,7 +15,6 @@ class ClienteController {
   }
 
   async store(req, res) {
-
     const schema = Yup.object().shape({
       nome: Yup.string().required(),
       email: Yup.string().email().required(),
@@ -24,10 +22,9 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res
-        .status(400)
-        .json({
-          error: "Validação falhou, tente novamente ou contate o suporte!",
+        return res.json({
+          status: 400,
+          error: "Nome, e-mail e cpf, devem ser preenchidos!",
         });
     }
 
@@ -36,7 +33,11 @@ class ClienteController {
     });
 
     if (clienteExiste) {
-      return res.status(400).json({ error: "Cliente já existe!" });
+        return res.json({
+          status: 400,
+          error: "Cliente já existe com este e-mail!",
+        });
+      }
     }
 
     const cliente = await Cliente.create(req.body);
@@ -51,12 +52,11 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res
-        .status(400)
-        .json({
-          error: "Validação falhou, tente novamente ou contate o suporte!",
+        return res.json({
+          status: 400,
+          error: "Nome, e-mail e cpf, devem ser preenchidos!",
         });
-    }
+      }
 
     const { id } = req.params;
     const { email } = req.body;
@@ -69,13 +69,16 @@ class ClienteController {
       });
 
       if (clienteExiste) {
-        return res.status(400).json({ error: "Cliente já existe." });
+        return res.json({
+          status: 400,
+          error: "Clliente não cadastrado!",
+        });
       }
     }
 
     const clienteAtualizado = await cliente.update(req.body);
 
-    return res.json( clienteAtualizado );
+    return res.json(clienteAtualizado);
   }
 
   async delete(req, res) {
@@ -83,17 +86,15 @@ class ClienteController {
       where: { id: req.id_usuario, tipo_usuario: "A" },
     });
 
-    if (!UsuarioAutorizado) {
-      return res
-        .status(401)
-        .json({ error: "Usuário não tem perfil de administrador." });
-    }
     const { id } = req.params;
 
     const usuario = await Cliente.destroy({ where: { id } });
 
     if (usuario <= 0) {
-      return res.status(400).json("Cliente  não existe.");
+      return res.json({
+        status: 400,
+        error: "Clliente não cadastrado!",
+      });
     }
 
     return res.json("Cliente deletado com sucesso.");
