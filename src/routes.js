@@ -7,6 +7,11 @@ import PetController from "./app/controllers/PetController";
 import ServicoController from "./app/controllers/ServicoController";
 import AgendaController from "./app/controllers/AgendaController";
 import SessaoController from "./app/controllers/SessaoController";
+import DashClientesController from "./app/controllers/DashClientesController";
+import DashPetsController from "./app/controllers/DashPetsController";
+import DashServicosController from "./app/controllers/DashServicosController";
+import DashAgendaMesController from "./app/controllers/DashAgendaMesController";
+import DashAgendaSemController from "./app/controllers/DashAgendaSemController";
 
 import authMiddleware from "./app/middlewares/auth";
 
@@ -51,5 +56,35 @@ routes.post("/agenda", AgendaController.store);
 routes.put("/agenda/:id", AgendaController.update);
 //routes.put("/agenda/:id", AgendaController.updateConfirma);
 routes.delete("/agenda/:id", AgendaController.delete);
+
+//Rota de Dashboard Clientes
+routes.get("/dashclientes", DashClientesController.index);
+routes.post("/dashclientes", DashClientesController.store);
+routes.put("/dashclientes/:id", DashClientesController.update);
+routes.delete("/dashclientes/:id", DashClientesController.delete);
+
+//Rota de Dashboard Pets
+routes.get("/dashpets", DashPetsController.index);
+routes.post("/dashpets", DashPetsController.store);
+routes.put("/dashpets/:id", DashPetsController.update);
+routes.delete("/dashpets/:id", DashPetsController.delete);
+
+//Rota de Dashboard Servicos
+routes.get("/dashservicos", DashServicosController.index);
+routes.post("/dashservicos", DashServicosController.store);
+routes.put("/dashservicos/:id", DashServicosController.update);
+routes.delete("/dashservicos/:id", DashServicosController.delete);
+
+//Rota de Dashboard Agenda Mes
+routes.get("/dashagendames", DashAgendaMesController.index);
+routes.post("/dashagendames", DashAgendaMesController.store);
+routes.put("/dashagendames/:id", DashAgendaMesController.update);
+routes.delete("/dashagendames/:id", DashAgendaMesController.delete);
+
+//Rota de Dashboard Agenda Semanal
+routes.get("/dashagendasem", DashAgendaSemController.index);
+routes.post("/dashagendasem", DashAgendaSemController.store);
+routes.put("/dashagendasem/:id", DashAgendaSemController.update);
+routes.delete("/dashagendasem/:id", DashAgendaSemController.delete);
 
 module.exports = routes;
