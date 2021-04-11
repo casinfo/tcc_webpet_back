@@ -22,9 +22,8 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.json({
-        status: 400,
-        error: "Nome, e-mail e cpf devem ser preenchidos!",
+      return res.status(400).json({
+        error: "Validação de dados do cliente falhou!",
       });
     }
 
@@ -33,10 +32,7 @@ class ClienteController {
     });
 
     if (clienteExiste) {
-      return res.json({
-        status: 400,
-        error: "Cliente já existe com este e-mail!",
-      });
+      return res.status(400).json({ error: "Cliente já existe!" });
     }
 
     const cliente = await Cliente.create(req.body);
@@ -51,9 +47,8 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.json({
-        status: 400,
-        error: "Nome, e-mail e cpf, devem ser preenchidos!",
+      return res.status(400).json({
+        error: "Validação de dados do cliente falhou!",
       });
     }
 
@@ -68,10 +63,7 @@ class ClienteController {
       });
 
       if (clienteExiste) {
-        return res.json({
-          status: 400,
-          error: "Clliente já cadastrado!",
-        });
+        return res.status(400).json({ error: "Cliente já existe!" });
       }
     }
 
@@ -85,15 +77,18 @@ class ClienteController {
       where: { id: req.id_usuario, tipo_usuario: "A" },
     });
 
+    if (!UsuarioAutorizado) {
+      return res
+        .status(401)
+        .json({ error: "Usuário não tem perfil de administrador." });
+    }
+
     const { id } = req.params;
 
     const usuario = await Cliente.destroy({ where: { id } });
 
     if (usuario <= 0) {
-      return res.json({
-        status: 400,
-        error: "Clliente não cadastrado!",
-      });
+      return res.status(400).json("Cliente não existe.");
     }
 
     return res.json("Cliente deletado com sucesso.");
