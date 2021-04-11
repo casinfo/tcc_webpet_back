@@ -22,7 +22,7 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
+      return res.status(401).json({
         error: "Validação de dados do cliente falhou!",
       });
     }
@@ -47,7 +47,7 @@ class ClienteController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
+      return res.status(401).json({
         error: "Validação de dados do cliente falhou!",
       });
     }
